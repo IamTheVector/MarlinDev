@@ -465,10 +465,36 @@ const bool Z_MIN_PROBE_ENDSTOP_INVERTING = false; // set to true to invert the l
 
   #if ENABLED(AUTO_BED_LEVELING_GRID)
 
-    #define LEFT_PROBE_BED_POSITION 15
-    #define RIGHT_PROBE_BED_POSITION 170
-    #define FRONT_PROBE_BED_POSITION 20
-    #define BACK_PROBE_BED_POSITION 170
+/*
+                   BACK
+         |||||||||||||||||||Y||||||||
+         |||||||||||||||||||Y||||||||
+         ||||||||----------(B)XXXXXXX
+         ||||||||           |||||||||
+ LEFT    |||||||| Probing   ||||||||| RIGHT
+         |||||||| rectangle |||||||||
+         XXXXX(A)-----------|||||||||
+         ||||||Y|||||||||||||||||||||
+         ||||||Y|||||||||||||||||||||
+                   FRONT
+Edit By Nader Al Khatib Fab Lab Frosinone officine giardino                                                                              
+*/
+
+
+// set the rectangle in which to probe
+#define POS_A_X 40
+#define POS_A_Y 0
+#define POS_B_X 190
+#define POS_B_Y 150
+//
+
+
+
+ #define LEFT_PROBE_BED_POSITION  (POS_A_X+X_PROBE_OFFSET_FROM_EXTRUDER)
+ #define FRONT_PROBE_BED_POSITION (POS_A_Y+Y_PROBE_OFFSET_FROM_EXTRUDER)
+ 
+ #define RIGHT_PROBE_BED_POSITION (POS_B_X+X_PROBE_OFFSET_FROM_EXTRUDER)
+ #define BACK_PROBE_BED_POSITION  (POS_B_Y+Y_PROBE_OFFSET_FROM_EXTRUDER)
 
     #define MIN_PROBE_EDGE 10 // The Z probe minimum square sides can be no smaller than this.
 
