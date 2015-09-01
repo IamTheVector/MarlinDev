@@ -472,29 +472,48 @@ const bool Z_MIN_PROBE_ENDSTOP_INVERTING = false; // set to true to invert the l
          ||||||||----------(B)XXXXXXX
          ||||||||           |||||||||
  LEFT    |||||||| Probing   ||||||||| RIGHT
-         |||||||| rectangle |||||||||
+         ||||||||   Area    |||||||||
          XXXXX(A)-----------|||||||||
          ||||||Y|||||||||||||||||||||
-         ||||||Y|||||||||||||||||||||
+        (H)||||Y|||||||||||||||||||||
+
                    FRONT
-Edit By Nader Al Khatib Fab Lab Frosinone officine giardino                                                                              
+                                  
+Edit By Nader Al Khatib Fab Lab Frosinone                                                                                
 */
 
+//A point
+#define A_X 50
+#define A_Y 10
+//B point
+#define B_X 190
+#define B_Y 130
 
-// set the rectangle in which to probe
-#define POS_A_X 40
-#define POS_A_Y 0
-#define POS_B_X 190
-#define POS_B_Y 150
-//
+#define LEFT_PROBE_BED_POSITION  (A_X+X_PROBE_OFFSET_FROM_EXTRUDER)
+#define RIGHT_PROBE_BED_POSITION (B_X+X_PROBE_OFFSET_FROM_EXTRUDER)
+#define FRONT_PROBE_BED_POSITION (A_Y+Y_PROBE_OFFSET_FROM_EXTRUDER)
+#define BACK_PROBE_BED_POSITION  (B_Y+Y_PROBE_OFFSET_FROM_EXTRUDER)
 
 
+     // set the number of grid points per dimension
+     // I wouldn't see a reason to go above 3 (=9 probing points on the bed)
+    #define AUTO_BED_LEVELING_GRID_POINTS 2
 
- #define LEFT_PROBE_BED_POSITION  (POS_A_X+X_PROBE_OFFSET_FROM_EXTRUDER)
- #define FRONT_PROBE_BED_POSITION (POS_A_Y+Y_PROBE_OFFSET_FROM_EXTRUDER)
- 
- #define RIGHT_PROBE_BED_POSITION (POS_B_X+X_PROBE_OFFSET_FROM_EXTRUDER)
- #define BACK_PROBE_BED_POSITION  (POS_B_Y+Y_PROBE_OFFSET_FROM_EXTRUDER)
+
+  #else  // not AUTO_BED_LEVELING_GRID
+    // with no grid, just probe 3 arbitrary points.  A simple cross-product
+    // is used to esimate the plane of the print bed
+
+
+      #define ABL_PROBE_PT_1_X 15
+      #define ABL_PROBE_PT_1_Y 180
+      #define ABL_PROBE_PT_2_X 15
+      #define ABL_PROBE_PT_2_Y 20
+      #define ABL_PROBE_PT_3_X 170
+      #define ABL_PROBE_PT_3_Y 20
+      #define ABL_PROBE_PT_4_X 170
+      #define ABL_PROBE_PT_4_Y 20
+
 
     #define MIN_PROBE_EDGE 10 // The Z probe minimum square sides can be no smaller than this.
 
@@ -517,8 +536,8 @@ Edit By Nader Al Khatib Fab Lab Frosinone officine giardino
 
   // Offsets to the Z probe relative to the nozzle tip.
   // X and Y offsets must be integers.
-  #define X_PROBE_OFFSET_FROM_EXTRUDER -25     // Z probe to nozzle X offset: -left  +right
-  #define Y_PROBE_OFFSET_FROM_EXTRUDER -29     // Z probe to nozzle Y offset: -front +behind
+  #define X_PROBE_OFFSET_FROM_EXTRUDER -26     // Z probe to nozzle X offset: -left  +right
+  #define Y_PROBE_OFFSET_FROM_EXTRUDER -+30     // Z probe to nozzle Y offset: -front +behind
   #define Z_PROBE_OFFSET_FROM_EXTRUDER -12.35  // Z probe to nozzle Z offset: -below (always!)
 
   #define Z_RAISE_BEFORE_HOMING 4       // (in mm) Raise Z axis before homing (G28) for Z probe clearance.
